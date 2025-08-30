@@ -1,0 +1,23 @@
+# Write your MySQL query statement below
+ -- problem:
+-- report the fraction of players that logged in again on the day after 
+-- the day they first logged in, rounded to 2 decimal places.
+-- In other words:
+--   - determine the number of players who logged in on the day 
+--     immediately following their initial login,
+--   - divide it by the total number of players.
+
+-- my approach:
+--   1. Get the first login date for each player using MIN(event_date).
+--   2. Join this result back with Activity to check if the player logged in 
+--      on first_login + 1 day.
+--   3. Count distinct players who satisfy this condition.
+--   4. Divide by total distinct players.
+--   5. Round result to 2 decimals.
+select
+Round( (select count(distinct a.player_id)from Activity a 
+join (select player_id , min(event_date) as first_login 
+from Activity group by player_id) f 
+on a.player_id=f.player_id 
+where a.event_date=f. first_login+ interval 1 day )
+/(select count(distinct player_id)from Activity ),2) as fraction;
