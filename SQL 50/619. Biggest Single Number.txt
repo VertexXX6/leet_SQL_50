@@ -1,0 +1,21 @@
+# Write your MySQL query statement below
+ -- Problem:
+-- We need to find the largest single number from the table MyNumbers.
+-- A "single number" is a number that appears only once in the table.
+-- If there is no such number, we should return NULL.
+
+-- Approach:
+-- 1. Use GROUP BY with HAVING COUNT(*) = 1 to filter only the single numbers.
+-- 2. Order the result in descending order to get the largest single number first.
+-- 3. Apply LIMIT 1 to return only the biggest single number.
+-- 4. Wrap the subquery with IFNULL(..., NULL) so that if no single numbers exist,
+--    the query returns NULL instead of an empty result.
+
+select ifnull((select num 
+from MyNumbers 
+group by num  
+having count(*)=1 
+order by num desc
+limit 1 ) ,null) as num;
+
+ 
