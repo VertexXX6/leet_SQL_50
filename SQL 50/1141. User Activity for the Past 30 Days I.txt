@@ -1,0 +1,24 @@
+# Write your MySQL query statement below
+-- problem : 
+-- find the daily active user count for a period of 30 days ending 2019-07-27 inclusively. 
+-- A user was active on someday if they made at least one activity on that day.
+
+-- approach : 
+-- 1. filter the records where activity_date is between '2019-06-28' and '2019-07-27'.
+-- 2. select activity_date as the day.
+-- 3. count distinct user_id for each day to avoid duplicates of the same user.
+-- 4. group by activity_date to get the result day by day.
+-- 5. rename columns with aliases (day, active_users).
+
+-- note : 
+-- - if you use an aggregate function (like count) together with another column in select, 
+--   then you must group by that column. 
+-- - days with no activity will not appear in the result (which is expected).
+-- - always use distinct to make sure the same user is not counted multiple times in the same day.
+-- - remember to use single quotes for dates in the between condition.
+
+select activity_date as day , count(distinct user_id ) as active_users
+from Activity 
+where activity_date between '2019-06-28' and '2019-07-27'
+
+group by activity_date ;
