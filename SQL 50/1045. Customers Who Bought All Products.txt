@@ -1,0 +1,14 @@
+# Write your MySQL query statement below
+
+-- problem :  report the customer ids from the Customer table that bought all the products in the Product table.
+-- my approach :
+-- 1. Get the total number of products from the Product table using COUNT(*).
+-- 2. Look at the Purchase table (customer_id, product_id) and GROUP BY customer_id.
+-- 3. For each customer, COUNT(DISTINCT product_id) to see how many unique products they bought.
+-- 4. Compare that count with the total count of products (subquery).
+-- 5. If both counts match → that customer bought all products.
+
+select customer_id  
+from Customer group by 
+customer_id  
+having count(distinct product_key)= (select count(*) from Product);
