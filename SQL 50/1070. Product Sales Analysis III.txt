@@ -1,0 +1,22 @@
+# Write your MySQL query statement below
+/*
+Problem:
+Write a SQL query to find all sales that occurred in the first year each product was sold.
+
+- For each product_id, identify the earliest year it appears in the Sales table.
+- Return all sales entries for that product in that year.
+- The output should include: product_id, first_year, quantity, and price.
+- The result can be returned in any order.
+
+Approach:
+1. Use a subquery to get the minimum year (first_year) for each product_id.
+2. Match each product_id and its first_year with the Sales table.
+3. Return product_id, first_year, quantity, and price for those matched rows.
+*/
+
+
+SELECT product_id , year AS first_year , quantity , price 
+FROM Sales 
+WHERE (product_id,year) IN (SELECT product_id ,MIN(year)
+FROM Sales 
+GROUP BY product_id  );
